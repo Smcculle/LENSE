@@ -19,18 +19,44 @@ app.secret_key = "bacon"
 loc = os.getcwd()+"/"
 
 #variables for registry
-registry = "registry.cs.uno.edu"
-regmail = "user@email.com"
-reguser = "test"
-regpas = "user"
+registry = ""
+regmail = ""
+reguser = ""
+regpas = ""
 
 #variables for databse access
 dbhost = ""
 dbuser = ""
 dbpasswd = ""
 
+#read config.txt file
+with open(loc+"static/configs/config.txt") as f:
+     details = f.read()
+f.close()
+
+for line in details.splitlines():
+    line = line.split()
+    print line
+    if line == []:
+        pass
+    elif line[0] == "registry":
+       registry = line[2]
+    elif line[0] == "regmail":
+       regmail = line[2]
+    elif line[0] == "reguser":
+       reguser = line[2]
+    elif line[0] == "regmail":
+       regmail = line[2]
+    elif line[0] == "regpas":
+       regpas = line[2]
+    elif line[0] == "dbhost":
+       dbhost = line[2]
+    elif line[0] == "dbuser":
+       dbuser = line[2]
+    elif line[0] == "dbpasswd":
+       dbpasswd = line[2]
+
 grps = []
-users = {'test':'bacon'}
 radio1 = ''
 radio2 = ''
 search1 = ''

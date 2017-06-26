@@ -288,19 +288,29 @@ Create user lense and login to it
 sudo adduser lense
 su lense
 ```
-Place the contents of lense-cl inside the /home/lense/lense/ folder of the client
+Place the contents of 'lense-client' from Github to /home/lense/lense/ folder of the client.
+
+> Note: make sure that certificates for the registry server is placed inside all the clients as mentioned in Section 1.2.2
 
 ### 1.4. Running the Webapp
-To run server side webapp, execute in separate terminals
+
+####1.4.1 Lense Server
+To run server side webapp, browse to the lense directory and edit the 'config.txt' inside the ~/lense/static/configs/ folder and provide information in variables for registry and database access.
+
+After all the information have been filled in the config.txt file, execute the following commands in separate terminals^M
 ```sh
 python server.py
 python adv-server.py
 python sync-server.py
 ```
-To run the client side webapp, login to lense user and execute in separate terminals
+
+####1.4.2 Client Server
+To run the client side webapp, login to user 'lense' and browse to the lense directory and edit the 'config.txt' inside the ~/lense/static/configs/ folder and provide information in variables for registry and database access.
+
+After all the information have been filled in the config.txt file, execute the following commands in separate terminals
 ```sh
 python client.py
 python client-daemon.py
 ```
 
- > Make sure that admin server has passwordless access to both clients and registry server. Also make sure clients have executed the procedures, mentioned in Section 1.2, to accept the certificates for registry server. 
+ > Make sure that admin server has passwordless access to both clients and registry server. Also make sure clients and server have executed the procedures mentioned in Section 1.2.1, to accept the certificates for registry server. 
