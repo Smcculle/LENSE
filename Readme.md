@@ -180,8 +180,10 @@ Allow user 'lense' to execute Docker commands without sudo access by executing t
 sudo usermod -aG docker lense
 ```
 
-Create directory for storing images and other files inside the home directory of user 'lense'
+Login to user 'lense' and create directory for storing images and other files inside the home directory of user 'lense'
 ```sh
+su lense
+cd
 mkdir -p ~/lense/ngx/uploads ~/lense/reg/ ~/lense/ngx/certs
 ```
 Docker by default doesnot have any security for authenticating user access or encrypting the user-registry communication. Therefore, users are authenticated with a Nginx proxy and communications are encrypted with the help of self signed certificates. Since we'll be using Nginx to handle our security, we'll first install the apache2-utils package which contains the htpasswd utility that can easily generate password hashes for authenticating users in Nginx:
