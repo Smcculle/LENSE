@@ -158,12 +158,22 @@ mysql -u lense -p
 #Inside the mysql shell
 >mysql use lense;
 ```
->If you have the proper access and permissions, you should be able to execute the above command without any error
+
+Once inside the 'lense' database, create couple of users by inserting values into the table 'users'.
+```sh
+>mysql INSERT INTO users values ('random_uid','username','first_name','middle_name','last_name','','password','email_address');
+```
+
+> This is the username and password that a user can use to login to the webapp.
+
+
 
  Note: Make sure curl is installed in the server
 ```sh
 apt-get install curl
 ```
+
+
 
 ### 1.2 Registry Server
 Docker needs to be installed in the registry server just like in section 1.1.1.
@@ -294,7 +304,7 @@ Place the contents of 'lense-client' from Github to /home/lense/lense/ folder of
 
 ### 1.4. Running the Webapp
 
-####1.4.1 Lense Server
+#### 1.4.1 Lense Server
 To run server side webapp, browse to the lense directory and edit the 'config.txt' inside the ~/lense/static/configs/ folder and provide information in variables for registry and database access.
 
 After all the information have been filled in the config.txt file, execute the following commands in separate terminals^M
@@ -304,7 +314,7 @@ python adv-server.py
 python sync-server.py
 ```
 
-####1.4.2 Client Server
+#### 1.4.2 Client Server
 To run the client side webapp, login to user 'lense' and browse to the lense directory and edit the 'config.txt' inside the ~/lense/static/configs/ folder and provide information in variables for registry and database access.
 
 After all the information have been filled in the config.txt file, execute the following commands in separate terminals
@@ -312,5 +322,7 @@ After all the information have been filled in the config.txt file, execute the f
 python client.py
 python client-daemon.py
 ```
+
+Once all the python script shave been run, you can access the webapp by typing in the terminal 'localhost:5000'
 
  > Make sure that admin server has passwordless access to both clients and registry server. Also make sure clients and server have executed the procedures mentioned in Section 1.2.1, to accept the certificates for registry server. 

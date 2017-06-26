@@ -1,5 +1,6 @@
 from socket import *
 import ast
+import os
 import thread
 import subprocess
 import MySQLdb
@@ -11,6 +12,22 @@ PORT = 9898 # must be input parameter @TODO
 #variables for accessign database
 dbuser = ""
 dbpasswd = ""
+
+loc = os.getcwd()+"/"
+
+#read config.txt file
+with open(loc+"static/configs/config.txt") as f:
+     details = f.read()
+f.close()
+
+for line in details.splitlines():
+    line = line.split()
+    if line == []:
+        pass
+    elif line[0] == "dbuser":
+       dbuser = line[2]
+    elif line[0] == "dbpasswd":
+       dbpasswd = line[2]
 
 def executer(cmd):
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)

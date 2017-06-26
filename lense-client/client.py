@@ -36,7 +36,6 @@ f.close()
 
 for line in details.splitlines():
     line = line.split()
-    print line
     if line == []:
         pass
     elif line[0] == "registry":
