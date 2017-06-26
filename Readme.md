@@ -175,6 +175,10 @@ Create user 'lense' in the registry server and give a password of your choice
 ```sh
 adduser lense
 ```
+Allow user 'lense' to have sudo access to install packages
+```sh
+sudo usermod -aG sudo lense
+```
 Allow user 'lense' to execute Docker commands without sudo access by executing the command
 ```sh
 sudo usermod -aG docker lense
@@ -230,7 +234,7 @@ openssl x509 -req -in $hostname.csr -CA devdockerCA.crt -CAkey devdockerCA.key -
 ```
 So now, we have created our certificates for encrypting communication. To create the Nginx server and Docker registry, we simply download and run the pre configured images of these available from the Docker's public registry. 
 
-> Note: Download the 'registry.conf' file from 'registry-server' folder of this Github account, edit the server_name to $hostname of the regsitry server. Save or copy this file into the '~/lense/ngx/' folder of the registry server.
+> Note: Download the 'registry.conf' file from 'registry-server' folder of this Github account and replace the 'servername.domain.com' in line number 7 of the registry.conf file to $hostname of the regsitry server. Save or copy this file into the '~/lense/ngx/' folder of the registry server.
 
 Now to host the registry and nginx, simple execute the following commands in order
 
@@ -241,7 +245,7 @@ docker run -p 5000 --name registry -e REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=
 # start nginx proxy container
 docker run -p 443:443 -p 80:80 --link registry:registry -v ~/lense/ngx/:/etc/nginx/conf.d -v /tmp/lense/:/var/log/nginx/ --name nginx nginx
 ```
->Note: Always start the registry container before nginx container.
+>Note: Always start the registry container before nginx container. Remove any running container fo the same name using 'docker rm -f $container_name' command
 
 Registry and Nginx container will be downloaded from the Docker Hub repo automatically and started. The access and error logs for nginx will be available in directory '/tmp/lense/'. You can change this location by modifying it in the above command for starting nginx container.
 
@@ -250,7 +254,7 @@ Check status of the container using *docker ps -a* command. You should see the r
 #### 1.2.2 Accessing the Registry
 Since the certificates we just generated in the steps above, aren't verified by any known certificate authority. We need to tell all clients/servers that are going to be using this Docker registry that this is a legitimate certificate. Every client/server that needs to be access the Docker regsitry has to perform these two steps, below.
 
-Copy the devdockerCA.crt from the registry server to the required machine with the following commands:
+Copy the devdockerCA.crt from the registry server to the required machine using scp command or physical copy using removable media. Once copied, execute the following commands in the required client/server:
 ```sh
 mkdir /usr/local/share/ca-certificates/docker-dev-cert
 cp devdockerCA.crt /usr/local/share/ca-certificates/docker-dev-cert
@@ -268,41 +272,23 @@ docker login https://$registry_hostname
 ### 1.3 Clients
 Docker and Flask needs to be installed inside the clients, just like in section 1.1.1 and 1.1.3 respectively. Copy the Additionally, for serverside ansible to control clientside docker components, docker-py package needs to be installed
 ```sh
-pip install docker-py
+sudo pip install docker-py
 ```
 Install packages for ssh, and python to access mysql
 ```sh
-apt-get install openssh-server python-dev libmysqlclient-dev
-pip install MySQL-python
+sudo apt-get install openssh-server python-dev libmysqlclient-dev
+sudo pip install MySQL-python
 ```
 Install other required packages
 ```sh
-apt-get install xterm curl
+sudo apt-get install xterm curl
 ```
 Create user lense and login to it
 ```sh
-adduser lense
+sudo adduser lense
 su lense
 ```
 Place the contents of lense-cl inside the /home/lense/lense/ folder of the client
-
-### 1.3 Clients
-Docker and Flask needs to be installed inside the clients, just like in section 1.1.1 and 1.1.3 respectively. Copy the Additionally, for serverside ansible to control clientside docker components, docker-py package needs to be installed
-```sh
-pip install docker-py
-```
-Install packages for ssh, and python to access mysql
-```sh
-apt-get install openssh-server python-dev libmysqlclient-dev
-pip install MySQL-python
-```
-Create user lense and login to it
-```sh
-adduser lense
-su lense
-```
-Place the contents of lense-cl inside the /home/lense/lense/ folder of the client
-
 
 ### 1.4. Running the Webapp
 To run server side webapp, execute in separate terminals
