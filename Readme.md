@@ -164,7 +164,7 @@ Once inside the 'lense' database, create couple of users by inserting values int
 >mysql INSERT INTO users values ('random_uid','username','first_name','middle_name','last_name','','password','email_address');
 ```
 
-> This is the username and password that a user can use to login to the webapp.
+> NOTE: This is the username and password that a user can use to login to the webapp.
 
 
 
@@ -323,6 +323,6 @@ python client.py
 python client-daemon.py
 ```
 
-Once all the python script shave been run, you can access the webapp by typing in the terminal 'localhost:5000'
+Once all the python script shave been run, you can access the webapp by typing in the Web_Browser 'localhost:5000'
 
  > Make sure that admin server has passwordless access to both clients and registry server. Also make sure clients and server have executed the procedures mentioned in Section 1.2.1, to accept the certificates for registry server. 
