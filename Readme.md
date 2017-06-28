@@ -82,17 +82,17 @@ If SSH is not installed int the server, install it using the command
 ```sh
 apt-get install openssh-server
 ```
-Use ssh from the server to create a directory ~/.ssh for user lense on the client machine
+Use ssh from the server to create a directory ~/.ssh for user 'lense' on the clients and registry machine
 
 ```sh
-ssh lense@B mkdir -p ~/.ssh
+ssh lense@B mkdir -p /home/lense/.ssh
 ```
 > Note: B is the IP address or hostname of the client machine 
 > Make sure that user 'lense' exist in the client machine. Create it if it is not created already.
 
 Finally append the server's public key to client's authorized_keys by executing the following command in the server
 ```sh
-cat .ssh/id_rsa.pub | ssh lense@B 'cat >> .ssh/authorized_keys'
+cat ~/.ssh/id_rsa.pub | ssh lense@B 'cat >> .ssh/authorized_keys'
 ```
 Check if the server has passwordless access from the server by typing or by issuing an ansible command. Add the the ip address of the client and username, under a some group in a hostfile
 ```sh
